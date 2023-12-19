@@ -1,0 +1,140 @@
+<section>
+  <h1>{{ pageTitle }}</h1>
+  <form [formGroup]="productForm">
+    <div class="row mt-2">
+      <div class="col-md-2">
+        <label for="sku" class="form-label">Sku</label>
+        <input
+          type="text"
+          class="form-control"
+          id="sku"
+          formControlName="sku"
+          placeholder="Sku"
+        />
+        <div
+          class="form-text text-danger"
+          *ngIf="
+            productForm.get('sku')?.errors && productForm.get('sku')?.touched
+          "
+        >
+          O SKU é obrigatorio*
+        </div>
+      </div>
+      <div class="col-md-10">
+        <label for="title" class="form-label">Titulo</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          formControlName="title"
+          placeholder="Titulo"
+        />
+        <div
+          class="form-text text-danger"
+          *ngIf="
+            productForm.get('title')?.errors &&
+            productForm.get('title')?.touched
+          "
+        >
+          O Título é obrigatorio*
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-4">
+        <label for="price" class="form-label">Preço</label>
+        <input
+          type="string"
+          class="form-control"
+          id="price"
+          formControlName="price"
+          placeholder="Preço"
+          prefix="R$ "
+          mask="separator.2"
+          thousandSeparator="."
+        />
+        <div
+          class="form-text text-danger"
+          *ngIf="
+            productForm.get('price')?.errors &&
+            productForm.get('price')?.touched
+          "
+        >
+          O preço é obrigatorio*
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="stock" class="form-label">Estoque</label>
+        <input
+          type="number"
+          class="form-control"
+          id="stock"
+          formControlName="stock"
+          placeholder="Estoque"
+        />
+        <div
+          class="form-text text-danger"
+          *ngIf="
+            productForm.get('stock')?.errors &&
+            productForm.get('stock')?.touched
+          "
+        >
+          O estoque é obrigatorio*
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" formControlName="active">
+          <option [ngValue]="true">Ativo</option>
+          <option [ngValue]="false">Inativo</option>
+        </select>
+        <div
+          class="form-text text-danger"
+          *ngIf="
+            productForm.get('active')?.errors &&
+            productForm.get('active')?.touched
+          "
+        >
+          O status é obrigatorio*
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-12">
+        <label for="description" class="form-label">Descrição</label>
+        <textarea
+          class="form-control"
+          id="description"
+          formControlName="description"
+          rows="3"
+        ></textarea>
+      </div>
+    </div>
+    <div class="mt-2">
+      <label for="image" class="form-label">Foto (.jpg)</label>
+      <input
+        class="form-control"
+        type="file"
+        id="image"
+        formControlName="image"
+        (change)="onFileSelected($event)"
+      />
+      <div
+        class="form-text text-danger"
+        *ngIf="
+          productForm.get('image')?.errors && productForm.get('image')?.touched
+        "
+      >
+        É obrigatório enviar uma imagem*
+      </div>
+    </div>
+    <div class="d-flex justify-content-end gap-2 py-2">
+      <button type="button" (click)="cancel()" class="btn btn-danger">
+        Cancelar
+      </button>
+      <button type="submit" (click)="save()" class="btn btn-primary">
+        Salvar
+      </button>
+    </div>
+  </form>
+</section>

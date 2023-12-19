@@ -1,0 +1,29 @@
+<section class="row" id="info-cards">
+  <div class="col-md-4 col-lg-4 col-xl-3 my-2">
+    <app-entity-total-card
+      [data]="{
+        title: 'Produtos',
+        total: dashboard.totalProducts,
+        icon: 'shirt'
+      }"
+    />
+  </div>
+  <div class="col-md-4 col-lg-4 col-xl-3 my-2">
+    <app-entity-total-card
+      [data]="{
+        title: 'Pedidos',
+        total: dashboard.totalOrders,
+        icon: 'box'
+      }"
+    />
+  </div>
+  <div class="col-md-4 col-lg-4 col-xl-3 my-2">
+    <app-entity-total-card
+      [data]="{
+        title: 'Clientes',
+        total: dashboard.totalOrders,
+        icon: 'user'
+      }"
+    />
+  </div>
+</section>

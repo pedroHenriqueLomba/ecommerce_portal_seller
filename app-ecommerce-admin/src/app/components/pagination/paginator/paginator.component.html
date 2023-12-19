@@ -1,0 +1,9 @@
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item" (click)="previousPage()"><a class="page-link pointer">Anterior</a></li>
+    <li class="page-item" *ngFor="let page of getPagesArray()">
+      <a class="page-link pointer" (click)="setPage(page)" [ngClass]="{'active': currentPage === page}">{{ page }}</a>
+    </li>
+    <li class="page-item" (click)="nextPage()"><a class="page-link pointer">Próxima</a></li>
+  </ul>
+</nav>

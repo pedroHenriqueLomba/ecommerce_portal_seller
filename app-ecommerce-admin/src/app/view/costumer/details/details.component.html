@@ -1,0 +1,43 @@
+<section>
+  <h1>Cliente</h1>
+  <div class="row py-1" [formGroup]="costumerForm">
+    <div class="col-md-2">
+      <label for="cpf" class="form-label">Cpf</label>
+      <input
+        formControlName="cpf"
+        id="cpf"
+        value="101.121.779-13"
+        type="text"
+        class="form-control"
+        readonly
+      />
+    </div>
+    <div class="col-md-4">
+      <label for="name" class="form-label">Nome</label>
+      <input
+        formControlName="name"
+        id="name"
+        value="Pedro Henrique Lomba"
+        type="text"
+        class="form-control"
+        readonly
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="email" class="form-label">Email</label>
+      <input
+        formControlName="email"
+        id="email"
+        value="p.henrique.lomba@gmail.com"
+        type="text"
+        class="form-control"
+        readonly
+      />
+    </div>
+  </div>
+  <div class="d-flex justify-between py-2">
+    <button type="submit" (click)="gotToList()" class="btn btn-success">
+      Voltar
+    </button>
+  </div>
+</section>

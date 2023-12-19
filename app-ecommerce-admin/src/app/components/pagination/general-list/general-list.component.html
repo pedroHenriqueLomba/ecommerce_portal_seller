@@ -1,0 +1,11 @@
+<table class="table">
+  <thead>
+    <tr>
+      <ng-content select="[slot='fields']"></ng-content>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-content select="[slot='data']"></ng-content>
+  </tbody>
+</table>

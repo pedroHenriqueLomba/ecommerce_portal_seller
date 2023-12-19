@@ -1,0 +1,22 @@
+<section>
+  <app-general-list>
+    <th scope="col" slot="fields" *ngFor="let field of fields">{{ field }}</th>
+    <tr slot="data" *ngFor="let item of data">
+      <th scope="row">{{ item.sku }}</th>
+      <td>{{ item.title }}</td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.active ? "Ativo" : "Inativo" }}</td>
+      <td><a (click)="goToProduct(item.sku)" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></a></td>
+    </tr>
+  </app-general-list>
+  <div class="d-flex justify-content-between">
+    <app-paginator
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (onPageChange)="onPageChange($event)"
+    ></app-paginator>
+    <div>
+      <a (click)="changeView()" class="btn btn-primary">Adicionar</a>
+    </div>
+  </div>
+</section>

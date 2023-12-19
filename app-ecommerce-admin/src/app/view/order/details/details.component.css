@@ -1,0 +1,4 @@
+.dashed-line {
+  border-bottom: 1px dashed #000; /* Espessura da linha, estilo e cor */
+  margin: 10px 0; /* Margem opcional para espaçamento */
+}
