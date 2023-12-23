@@ -1,0 +1,16 @@
+<form [formGroup]="loginForm">
+  <div class="text-center">
+    <h2 class="border-bottom border-danger d-inline px-5">Login</h2>
+  </div>
+  <div>
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" formControlName="email"/>
+  </div>
+  <div>
+    <label for="password" class="form-label">Senha</label>
+    <input type="password" class="form-control" id="password" formControlName="password"/>
+  </div>
+  <div class="text-center">
+    <button class="btn btn-success mt-3" (click)="login()">Entrar</button>
+  </div>
+</form>

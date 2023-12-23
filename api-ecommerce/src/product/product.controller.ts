@@ -26,7 +26,6 @@ import * as fs from 'fs';
 export class ProductController {
   constructor(private productService: ProductService) {}
 
-  // TODO - Implementar paginação e filtros
   @Get()
   findAll(@Query() query): Promise<Product[]> {
     const queryPaginator = new QueryPaginator(

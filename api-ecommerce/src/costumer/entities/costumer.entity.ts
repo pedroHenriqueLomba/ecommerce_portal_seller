@@ -3,5 +3,4 @@ export class Costumer {
     cpf: string;
     email: string;
     password: string;
-    active: boolean;
 }

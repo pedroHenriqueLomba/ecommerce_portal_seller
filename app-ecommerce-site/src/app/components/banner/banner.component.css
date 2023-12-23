@@ -1,0 +1,7 @@
+.elemento {
+  width: 100%; /* Largura do elemento */
+  height: 300px; /* Altura do elemento */
+  background-image: url('../../../assets/banner/banner_loja.png'); /* Imagem de fundo */
+  background-size: cover; /* Ajuste para cobrir todo o elemento */
+  background-position: center; /* Centraliza a imagem de fundo */
+}

@@ -1,4 +1,5 @@
-import { Controller } from '@nestjs/common';
+import { AuthGuard } from './../auth/auth.guard';
+import { Controller, UseGuards } from '@nestjs/common';
 import {
     Get,
     Param,
@@ -28,7 +29,6 @@ export class OrderController {
         return this.orderService.findAll(queryPaginator);
     }
 
-    // TODO evitar o erro 500 em caso de id com formato incorreto
     @Get(':id')
     findById(@Param('id') id: string) {
         try {
@@ -39,6 +39,7 @@ export class OrderController {
     }
 
     @Post()
+    @UseGuards(AuthGuard)
     create(@Body() orderData: CreateOrderDto) {
         try {
             return this.orderService.create(orderData);

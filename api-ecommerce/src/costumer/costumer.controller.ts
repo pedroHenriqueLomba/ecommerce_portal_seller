@@ -27,7 +27,6 @@ export class CostumerController {
         return this.costumerService.findAll(queryPaginator);
     }
 
-    // TODO evitar o erro 500 em caso de id com formato incorreto
     @Get(':cpf')
     findByCpf(@Param('cpf') cpf: string) {
         try {

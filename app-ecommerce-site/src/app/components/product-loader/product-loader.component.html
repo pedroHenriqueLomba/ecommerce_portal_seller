@@ -1,0 +1,15 @@
+<section>
+  <div class="row">
+    <div class="col-md-3 d-flex justify-content-center py-2" *ngFor="let product of products">
+      <app-product-card [product]="product"></app-product-card>
+    </div>
+  </div>
+  <div class="text-center py-2" *ngIf="hasMorePages(); else noMoreProducts">
+    <button class="btn btn-primary" (click)="loadProducts()">Visualizar mais</button>
+  </div>
+  <ng-template #noMoreProducts>
+    <div class="text-center">
+      Ops, parece que nossos produtos acabaram...
+    </div>
+  </ng-template>
+</section>

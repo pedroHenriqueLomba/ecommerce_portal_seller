@@ -13,6 +13,7 @@ import Paginator from 'src/helpers/paginator/paginator';
     }])
   ],
   controllers: [CostumerController],
-  providers: [CostumerService, Paginator]
+  providers: [CostumerService, Paginator],
+  exports: [CostumerService]
 })
 export class CostumerModule { }

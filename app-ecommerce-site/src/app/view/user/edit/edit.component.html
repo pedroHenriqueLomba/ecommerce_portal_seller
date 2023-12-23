@@ -1,0 +1,64 @@
+<section class="container py-2">
+  <form>
+    <div class="text-center">
+      <h2 class="border-bottom border-danger d-inline px-5">Editar cadastro</h2>
+    </div>
+    <div>
+      <label for="registerEmail" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        formControlName="email"
+        id="registerEmail"
+      />
+      <div class="form-text text-danger" *ngIf="">Email inválido*</div>
+    </div>
+    <div>
+      <label for="registerName" class="form-label">Nome</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="name"
+        id="registerName"
+      />
+    </div>
+    <div class="form-text text-danger" *ngIf="">O nome é obrigatorio*</div>
+    <div>
+      <label for="registerCpf" class="form-label">Cpf</label>
+      <input
+        type="string"
+        class="form-control"
+        formControlName="cpf"
+        id="registerCpf"
+      />
+      <div class="form-text text-danger" *ngIf="">Cpf inválido*</div>
+    </div>
+    <div>
+      <label for="registerPassword" class="form-label">Senha</label>
+      <input
+        type="password"
+        class="form-control"
+        formControlName="newPassword"
+        id="registerPassword"
+      />
+      <div class="form-text text-danger" *ngIf="">
+        A senha precisa ter 8 dígitos*
+      </div>
+    </div>
+    <div>
+      <label for="registerPasswordConfirmation" class="form-label"
+        >Confirme sua senha</label
+      >
+      <input
+        type="password"
+        class="form-control"
+        formControlName="newPasswordConfirmation"
+        id="registerPasswordConfirmation"
+      />
+      <div class="form-text text-danger" *ngIf="">As senhas são diferentes</div>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-success mt-3">Atualizar</button>
+    </div>
+  </form>
+</section>

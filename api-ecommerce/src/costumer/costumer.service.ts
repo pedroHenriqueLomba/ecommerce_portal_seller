@@ -29,7 +29,6 @@ export class CostumerService {
     return selectedCostumer;
   }
 
-  // TODO VERIFICAR MANEIRA DE RETIRAR A LÓGICA DE VERIFICAÇÃO DE EMAIL DO SERVICE
   async create(costumerData: CreateCostumerDto): Promise<Costumer> {
     try {
       if (await this.costumerModel.findOne({ email: costumerData.email }))
@@ -63,5 +62,14 @@ export class CostumerService {
     if (!disabledCostumer)
       throw new HttpException('Cliente não encontrado', 404);
     return disabledCostumer;
+  }
+
+  async findByEmail(email: string): Promise<CostumerSchema> {
+    const selectedCostumer = await this.costumerModel
+      .findOne({ email: email })
+      .exec();
+    if (!selectedCostumer)
+      throw new HttpException('Cliente não encontrado', 404);
+    return selectedCostumer;
   }
 }

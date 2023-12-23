@@ -1,0 +1,61 @@
+<header>
+  <nav class="navbar navbar-expand-lg bg-red">
+    <div class="container-fluid container">
+      <a class="navbar-brand link-light" routerLink="">Portal do Seller</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto py-1 mb-lg-0">
+          <li class="nav-item">
+            <a
+              class="nav-link active link-light"
+              aria-current="page"
+              routerLink=""
+              >Produtos</a
+            >
+          </li>
+        </ul>
+        <span class="w-50 py-1">
+          <form class="input-group" role="search">
+            <input
+              type="text"
+              class="form-control border border-light"
+              placeholder="Buscar produto"
+              aria-label="Buscar produto"
+            />
+            <button
+              class="btn btn-outline-light"
+              type="button"
+              id="button-addon2"
+            >
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+        </span>
+        <div class="d-flex align-items-center ms-auto gap-4 py-1">
+          <div class="" *ngIf="!isAutenticated">
+            <a
+              routerLink="login"
+              class="link-underline link-underline-opacity-0 link-light"
+              >Entrar / Cadastrar</a
+            >
+          </div>
+          <div>
+            <a routerLink="carrinho" class="text-light">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

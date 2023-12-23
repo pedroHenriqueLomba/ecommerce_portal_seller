@@ -7,6 +7,8 @@ import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { AuthModule } from './auth/auth.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       rootPath: __dirname + '/../public',
       serveRoot: '/public',
     }),
+    AuthModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [AppService],
