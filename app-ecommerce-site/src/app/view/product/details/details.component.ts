@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
 import Product from '../product.entity';
+import { CommonModule } from '@angular/common';
+import { OrderItem } from '../../order/entities/orderItem.entity';
+import { CartService } from '../../cart/cart.service';
 
 @Component({
   selector: 'app-details',
@@ -11,7 +14,11 @@ import Product from '../product.entity';
   styleUrl: './details.component.css',
 })
 export class DetailsComponent {
-  constructor(private service: ProductService, private route: Router) {}
+  constructor(
+    private service: ProductService,
+    private route: Router,
+    private cartService: CartService
+  ) {}
 
   public product!: Product;
 
@@ -30,6 +37,24 @@ export class DetailsComponent {
     return this.product.price.toLocaleString('pt-br', {
       style: 'currency',
       currency: 'BRL',
+    });
+  }
+
+  addToCart({ sku }: { sku: string }) {
+    const cartItem: OrderItem = {
+      sku: sku,
+      quantity: 1,
+    };
+    this.cartService.addProduct(cartItem).subscribe({
+      next: (test) => {
+        this.route.navigate(['carrinho']);
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.route.navigate(['login']);
+        }
+        console.log(err);
+      },
     });
   }
 }

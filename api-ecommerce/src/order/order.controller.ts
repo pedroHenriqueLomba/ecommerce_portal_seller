@@ -1,3 +1,4 @@
+import { cpf } from 'cpf-cnpj-validator';
 import { AuthGuard } from './../auth/auth.guard';
 import { Controller, UseGuards } from '@nestjs/common';
 import {
@@ -6,7 +7,8 @@ import {
     Post,
     Body,
     Put, 
-    Query
+    Query,
+    Request
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/createOrder.dto';
@@ -40,9 +42,9 @@ export class OrderController {
 
     @Post()
     @UseGuards(AuthGuard)
-    create(@Body() orderData: CreateOrderDto) {
+    create(@Body() orderData: CreateOrderDto, @Request() req) {
         try {
-            return this.orderService.create(orderData);
+            return this.orderService.create(orderData, req.user.cpf);
         } catch (error) {
             return error;
         }

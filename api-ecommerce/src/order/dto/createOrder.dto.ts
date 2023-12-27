@@ -6,8 +6,4 @@ import { CartItem } from '../../cart/entities/cartItem.entity';
 export class CreateOrderDto {
   @IsArray()
   items: CartItem[];
-
-  @IsString()
-  @Validate(cpfValidator)
-  costumer_cpf: string;
 }

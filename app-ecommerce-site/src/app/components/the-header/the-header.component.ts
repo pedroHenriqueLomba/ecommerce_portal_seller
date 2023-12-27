@@ -7,14 +7,16 @@ import { AutenticatorService } from '../../helpers/autenticator/autenticator.ser
   styleUrl: './the-header.component.css',
 })
 export class TheHeaderComponent {
-  public isAutenticated: Boolean = false;
   public costumerName?: String;
 
-  constructor(private autenticatorService: AutenticatorService) {
+  constructor(private autenticatorService: AutenticatorService) {}
+
+  public isAutenticatedUser(): Boolean {
     const costumerName = this.autenticatorService.getCostumerName();
     if (costumerName) {
       this.costumerName = costumerName;
-      this.isAutenticated = true;
+      return true;
     }
+    return false;
   }
 }

@@ -11,8 +11,19 @@
     <h5 class="card-title text-truncate">{{ product.title }}</h5>
     <h6 class="card-subtitle mb-2 text-muted">{{ priceFormatter() }}</h6>
     <div class="d-flex flex-column gap-1">
-      <button class="btn btn-success">Adicionar ao carrinho</button>
-      <button class="btn btn-outline-success" (click)="goToProduct()">Ver detalhes</button>
+      <button
+        class="btn btn-success"
+        (click)="
+          addToCart({
+            sku: product.sku,
+          })
+        "
+      >
+        Adicionar ao carrinho
+      </button>
+      <button class="btn btn-outline-success" (click)="goToProduct()">
+        Ver detalhes
+      </button>
     </div>
   </div>
 </div>

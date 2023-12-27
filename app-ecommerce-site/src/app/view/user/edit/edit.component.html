@@ -1,5 +1,5 @@
 <section class="container py-2">
-  <form>
+  <form [formGroup]="costumerForm">
     <div class="text-center">
       <h2 class="border-bottom border-danger d-inline px-5">Editar cadastro</h2>
     </div>
@@ -10,55 +10,67 @@
         class="form-control"
         formControlName="email"
         id="registerEmail"
+        readonly
       />
-      <div class="form-text text-danger" *ngIf="">Email inválido*</div>
     </div>
     <div>
-      <label for="registerName" class="form-label">Nome</label>
+      <label for="costumerName" class="form-label">Nome</label>
       <input
         type="text"
         class="form-control"
         formControlName="name"
-        id="registerName"
+        id="costumerName"
       />
     </div>
-    <div class="form-text text-danger" *ngIf="">O nome é obrigatorio*</div>
+    <div class="form-text text-danger" *ngIf="costumerForm.get('name')?.errors && costumerForm.get('name')?.touched">O nome é obrigatorio*</div>
     <div>
-      <label for="registerCpf" class="form-label">Cpf</label>
+      <label for="cpf" class="form-label">Cpf</label>
       <input
         type="string"
         class="form-control"
         formControlName="cpf"
-        id="registerCpf"
+        id="cpf"
       />
-      <div class="form-text text-danger" *ngIf="">Cpf inválido*</div>
+      <div class="form-text text-danger" *ngIf="costumerForm.get('cpf')?.errors && costumerForm.get('cpf')?.touched">Cpf inválido*</div>
     </div>
     <div>
-      <label for="registerPassword" class="form-label">Senha</label>
+      <label for="oldPassword" class="form-label">Senha atual</label>
       <input
         type="password"
         class="form-control"
-        formControlName="newPassword"
-        id="registerPassword"
+        formControlName="oldPassword"
+        id="oldPassword"
       />
-      <div class="form-text text-danger" *ngIf="">
+      <div class="form-text text-danger" *ngIf="costumerForm.get('oldPassword')?.errors && costumerForm.get('oldPassword')?.touched">
+        É necessário inserir sua senha atual*
+      </div>
+    </div>
+    <div>
+      <label for="password" class="form-label">Nova senha</label>
+      <input
+        type="password"
+        class="form-control"
+        formControlName="password"
+        id="password"
+      />
+      <div class="form-text text-danger" *ngIf="costumerForm.get('password')?.errors && costumerForm.get('password')?.touched && costumerForm.get('password')?.value !== ''">
         A senha precisa ter 8 dígitos*
       </div>
     </div>
     <div>
-      <label for="registerPasswordConfirmation" class="form-label"
+      <label for="passwordConfirmation" class="form-label"
         >Confirme sua senha</label
       >
       <input
         type="password"
         class="form-control"
-        formControlName="newPasswordConfirmation"
-        id="registerPasswordConfirmation"
+        formControlName="passwordConfirmation"
+        id="passwordConfirmation"
       />
-      <div class="form-text text-danger" *ngIf="">As senhas são diferentes</div>
+      <div class="form-text text-danger" *ngIf="costumerForm.get('passwordCofrimation')?.errors && costumerForm.get('passwordCofrimation')?.touched">As senhas são diferentes</div>
     </div>
     <div class="text-center">
-      <button class="btn btn-success mt-3">Atualizar</button>
+      <button class="btn btn-success mt-3" (click)="sendUpdate()">Atualizar</button>
     </div>
   </form>
 </section>

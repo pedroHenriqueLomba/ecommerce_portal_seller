@@ -18,7 +18,14 @@ export class CartService {
   }
 
   async addToCart(cpf: string, item: CartItem): Promise<Cart> {
-    await this.findOrCreateCart(cpf);
+    const cart = await this.findOrCreateCart(cpf);
+    if (cart.items.find((i) => i.sku === item.sku)) {
+      return await this.model.findOneAndUpdate(
+        { costumerCpf: cpf, 'items.sku': item.sku },
+        { $inc: { 'items.$.quantity': item.quantity } },
+        { new: true },
+      );
+    }
     return await this.model
       .findOneAndUpdate(
         { costumerCpf: cpf },
@@ -35,5 +42,14 @@ export class CartService {
         { $pull: { items: { sku: sku } } },
         { new: true },
     )
+  }
+
+  async updateQuantity(cpf: string, item: CartItem): Promise<Cart> {
+    await this.findOrCreateCart(cpf);
+    return await this.model.findOneAndUpdate(
+      { costumerCpf: cpf, 'items.sku': item.sku },
+      { $set: { 'items.$.quantity': item.quantity } },
+      { new: true },
+    );
   }
 }

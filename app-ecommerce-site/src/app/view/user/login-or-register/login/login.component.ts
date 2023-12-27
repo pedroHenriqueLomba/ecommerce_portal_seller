@@ -23,7 +23,7 @@ import { Auth } from '../../auth.entity';
 export class LoginComponent {
   constructor(
     private costumerService: CostumerService,
-    private router: Router,
+    private route: Router,
     private formBuilder: FormBuilder,
     private cookieService: CookieService
   ) {}
@@ -51,7 +51,7 @@ export class LoginComponent {
         this.cookieService.set('access_token', auth.access_token, {expires: Date.now() + 10800000}); // 3 hours
         this.cookieService.set('costumer_name', auth.name, {expires: Date.now() + 10800000}); // 3 hours
 
-        this.router.navigate(['/']);
+        this.route.navigate(['/']);
       },
       error: (err) => {
         console.log(err);

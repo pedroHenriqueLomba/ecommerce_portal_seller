@@ -4,12 +4,21 @@ import {
   IsStrongPassword,
   Validate,
 } from 'class-validator';
+import { cpfValidator } from 'src/helpers/validator/cpf.validator';
 import { NoNumbersValidator } from 'src/helpers/validator/noNumbers.validator';
 
 export default class UpdateCostumerDto {
   @IsString()
   @Validate(NoNumbersValidator)
   readonly name: string;
+
+  @IsString()
+  @Validate(cpfValidator)
+  readonly cpf: string;
+  
+  @IsString()
+  readonly oldPassword: string;
+
   @IsString()
   @IsStrongPassword(
     {

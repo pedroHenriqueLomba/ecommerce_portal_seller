@@ -44,14 +44,19 @@ export class CostumerService {
   }
 
   async update(
-    id: string,
+    cpf: string,
     costumerData: UpdateCostumerDto,
   ): Promise<CostumerSchema> {
-    const updatedCostumer = await this.costumerModel
-      .findOneAndUpdate({ _id: id }, costumerData, { new: true })
-      .exec();
-    if (!updatedCostumer)
-      throw new HttpException('Cliente não encontrado', 404);
+    const costumer = await this.costumerModel.findOne({ cpf: cpf }).exec();
+
+    if (!costumer) throw new HttpException('Cliente não encontrado', 404);
+    if (costumerData.oldPassword !== costumer.password) throw new HttpException('Senha incorreta', 400);
+    
+    const updatedCostumer = await this.costumerModel.findOneAndUpdate(
+      { cpf: cpf },
+      { $set: costumerData },
+      { new: true },
+    );
     return updatedCostumer;
   }
 

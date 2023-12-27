@@ -56,13 +56,11 @@ export class OrderService {
     return new DetailsOrderDto(await costumer, await products, await info);
   }
 
-  async create(orderDataDto: CreateOrderDto): Promise<Order> {
+  async create(orderDataDto: CreateOrderDto, cpf: string): Promise<Order> {
     const completeItems = [];
 
     for (const item of orderDataDto.items) {
-      const product = await this.productModel
-        .findOne({ sku: item.sku })
-        .exec();
+      const product = await this.productModel.findOne({ sku: item.sku }).exec();
       if (!product) throw new HttpException(`Produto não encontrado`, 404);
       if (product.stock < item.quantity)
         throw new HttpException(
@@ -79,7 +77,7 @@ export class OrderService {
     }
 
     const costumer = await this.costumerModel.findOne({
-      cpf: orderDataDto.costumer_cpf,
+      cpf: cpf,
     });
     if (!costumer) throw new HttpException(`Cliente não encontrado`, 404);
 
@@ -87,6 +85,8 @@ export class OrderService {
       (total, item) => total + item.product.price * item.quantity,
       0,
     );
+
+    if(total <= 0) throw new HttpException(`Valor total inválido`, 400);
 
     const orderData = {
       items: completeItems,
@@ -103,16 +103,16 @@ export class OrderService {
     const { items } = orderData;
 
     for (const item of items) {
-      const product = await this.productModel
-        .findOne({ sku: item.sku })
-        .exec();
+      const product = await this.productModel.findOne({ sku: item.sku }).exec();
       if (!product) throw new HttpException(`Produto não encontrado`, 404);
-      if(product.stock < item.quantity)
-        throw new HttpException(`Estoque do produto ${product.title} insuficiente`, 400);
+      if (product.stock < item.quantity)
+        throw new HttpException(
+          `Estoque do produto ${product.title} insuficiente`,
+          400,
+        );
     }
 
     const updateOperations = items.map(async (item) => {
-
       const filter = {
         _id: id,
         'items.product.sku': item.sku,
@@ -140,7 +140,8 @@ export class OrderService {
     }
 
     updatedOrder.total = updatedOrder.items.reduce(
-      (total, currentItem) => total + currentItem.product.price * currentItem.quantity,
+      (total, currentItem) =>
+        total + currentItem.product.price * currentItem.quantity,
       0,
     );
 

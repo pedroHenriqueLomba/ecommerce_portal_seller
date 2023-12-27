@@ -42,14 +42,21 @@
           </form>
         </span>
         <div class="d-flex align-items-center ms-auto gap-4 py-1">
-          <div class="" *ngIf="!isAutenticated">
+          <div class="" *ngIf="!isAutenticatedUser()">
             <a
               routerLink="login"
               class="link-underline link-underline-opacity-0 link-light"
               >Entrar / Cadastrar</a
             >
           </div>
-          <div>
+          <div class="" *ngIf="isAutenticatedUser()">
+            <a
+              routerLink="user/edit"
+              class="link-underline link-underline-opacity-0 link-light"
+              ><i class="fa-solid fa-user"></i> Olá {{ costumerName }}</a
+            >
+          </div>
+          <div *ngIf="isAutenticatedUser()">
             <a routerLink="carrinho" class="text-light">
               <i class="fa-solid fa-cart-shopping"></i>
             </a>

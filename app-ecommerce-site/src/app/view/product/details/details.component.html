@@ -18,7 +18,16 @@
         <h2>{{ priceFormatter() }}</h2>
         <div class="d-flex gap-2">
           <button class="btn btn-success">Comprar</button>
-          <button class="btn btn-outline-success">Adicionar ao carrinho</button>
+          <button
+            class="btn btn-outline-success"
+            (click)="
+          addToCart({
+            sku: product.sku,
+          })
+        "
+          >
+            Adicionar ao carrinho
+          </button>
         </div>
       </div>
     </div>

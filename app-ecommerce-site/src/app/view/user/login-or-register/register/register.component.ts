@@ -70,7 +70,7 @@ export class RegisterComponent {
   sendRequest(costumer: Costumer) {
     this.service.registerCostumer(costumer).subscribe({
       next: (response) => {
-        console.log(response);
+
       },
       error: (error) => {
         console.log(error);
