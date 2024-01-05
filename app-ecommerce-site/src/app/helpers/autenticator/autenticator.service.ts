@@ -21,4 +21,10 @@ export class AutenticatorService {
       return costumerName;
     }
   }
+
+  public logout(): void {
+    this.cookieService.delete('access_token');
+    this.cookieService.delete('costumer_name');
+    this.router.navigate(['/login']);
+  }
 }

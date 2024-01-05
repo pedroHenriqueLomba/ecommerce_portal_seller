@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OrderItem } from '../order/entities/orderItem.entity';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -27,7 +28,8 @@ export class CartComponent {
     private cartService: CartService,
     private formBuilder: FormBuilder,
     private orderService: OrderService,
-    private route: Router
+    private route: Router,
+    private toastr: ToastrService
   ) {
     // Instancia o formulário
     this.quantityForm = this.formBuilder.group({
@@ -43,7 +45,7 @@ export class CartComponent {
       next: (cart: Cart) => {
         this.items = cart.items;
         this.createForm();
-        this.quantityForm.valueChanges.subscribe(value => {
+        this.quantityForm.valueChanges.subscribe((value) => {
           const item = new OrderItem();
           value.quantity.forEach((quantity: number, index: number) => {
             item.sku = this.items[index].sku;
@@ -53,7 +55,7 @@ export class CartComponent {
         });
       },
       error: (err) => {
-        if(err.status === 401){
+        if (err.status === 401) {
           this.route.navigate(['login']);
         }
         console.log(err);
@@ -84,7 +86,8 @@ export class CartComponent {
   getTotal() {
     if (this.items) {
       return this.items.reduce(
-        (acc, item, index) => acc + item.price * this.quantityForm.value.quantity[index],
+        (acc, item, index) =>
+          acc + item.price * this.quantityForm.value.quantity[index],
         0
       );
     }
@@ -94,22 +97,28 @@ export class CartComponent {
   createOrder() {
     const orderData = this.configBody();
     this.orderService.createOrder(orderData).subscribe({
-      next: (response) => {
+      next: () => {
+        this.toastr.success('Pedido criado com sucesso!');
         this.route.navigate(['']);
       },
       error: (err) => {
-        if(err.status === 401){
+        if (err.status === 401) {
+          this.toastr.error('Faça login para criar o pedido!');
           this.route.navigate(['login']);
         }
+        this.toastr.error('Não foi possível criar o pedido!');
         console.log(err);
       },
     });
   }
 
-  configBody(){
+  configBody() {
     const orderData: CreateOrder = new CreateOrder();
     this.items.forEach((item, index) => {
-      orderData.items.push({sku: item.sku, quantity: this.quantityForm.value.quantity[index]});
+      orderData.items.push({
+        sku: item.sku,
+        quantity: this.quantityForm.value.quantity[index],
+      });
     });
     return orderData;
   }
@@ -117,15 +126,18 @@ export class CartComponent {
   removeItem(sku: string) {
     this.cartService.removeItem(sku).subscribe({
       next: (response) => {
+        this.toastr.success('Produto removido do carrinho');
         this.ngOnInit();
       },
       error: (err) => {
-        if(err.status === 401){
+        if (err.status === 401) {
+          this.toastr.error('Faça login para acessar o carrinho');
           this.route.navigate(['login']);
         }
+        this.toastr.error('Não foi possível remover o produto do carrinho');
         console.log(err);
       },
-    })
+    });
   }
 
   updateQuantity(orderItem: OrderItem) {
@@ -134,11 +146,12 @@ export class CartComponent {
         // Nothing to do
       },
       error: (err) => {
-        if(err.status === 401){
+        if (err.status === 401) {
+          this.toastr.error('Faça login para acessar o carrinho');
           this.route.navigate(['login']);
         }
         console.log(err);
       },
-    })
+    });
   }
 }

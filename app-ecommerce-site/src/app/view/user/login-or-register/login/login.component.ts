@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
 import { CostumerService } from './../../costumer.service';
 import { Router } from '@angular/router';
@@ -25,7 +26,8 @@ export class LoginComponent {
     private costumerService: CostumerService,
     private route: Router,
     private formBuilder: FormBuilder,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private toastr: ToastrService
   ) {}
 
   public loginForm!: FormGroup;
@@ -54,6 +56,7 @@ export class LoginComponent {
         this.route.navigate(['/']);
       },
       error: (err) => {
+        this.toastr.error('Login incorreto');
         console.log(err);
       },
     });

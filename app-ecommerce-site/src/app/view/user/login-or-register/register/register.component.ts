@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { equalsPasswordValidator } from './../../../../helpers/validators/equalsPasswordsValidator';
 import { Component } from '@angular/core';
 import {
@@ -19,7 +20,7 @@ import { Costumer } from '../../costumer.entity';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  constructor(private formBuilder: FormBuilder, private service: CostumerService) {}
+  constructor(private formBuilder: FormBuilder, private service: CostumerService, private toastr: ToastrService) {}
 
   public registerForm!: FormGroup;
 
@@ -70,9 +71,10 @@ export class RegisterComponent {
   sendRequest(costumer: Costumer) {
     this.service.registerCostumer(costumer).subscribe({
       next: (response) => {
-
+        this.toastr.success('Cadastro realizado com sucesso');
       },
       error: (error) => {
+        this.toastr.error('Não foi possível realizar seu cadastro');
         console.log(error);
       }
     });

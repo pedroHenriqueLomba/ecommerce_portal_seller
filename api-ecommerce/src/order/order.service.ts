@@ -13,6 +13,7 @@ import { CostumerSchema } from 'src/costumer/schemas/costumer.schema';
 import Paginator from 'src/helpers/paginator/paginator';
 import QueryPaginator from 'src/helpers/paginator/query.paginator';
 import { DetailsOrderDto } from './dto/detailsOrder.dto';
+import { ListOrderCostumerDto } from './dto/listOrderCostumer.dto';
 
 @Injectable()
 export class OrderService {
@@ -86,7 +87,7 @@ export class OrderService {
       0,
     );
 
-    if(total <= 0) throw new HttpException(`Valor total inválido`, 400);
+    if (total <= 0) throw new HttpException(`Valor total inválido`, 400);
 
     const orderData = {
       items: completeItems,
@@ -148,5 +149,50 @@ export class OrderService {
     const savedOrder = await updatedOrder.save();
 
     return savedOrder;
+  }
+
+  async getByCostumerCpf(cpf: string): Promise<ListOrderCostumerDto[]> {
+    const orders = await this.orderModel.find({ costumer_cpf: cpf }).exec();
+    return orders.map((order) => {
+      const parsedDate = order.createdAt?.toDateString();
+      return new ListOrderCostumerDto({
+        _id: order._id,
+        total: order.total,
+        createdAt: parsedDate,
+      });
+    });
+  }
+
+  async getOrderDataByCostumer(costumerCpf: string, orderId: string): Promise<DetailsOrderDto> {
+    const order = await this.orderModel
+      .findOne({ _id: orderId, costumer_cpf: costumerCpf })
+      .exec();
+
+    if (!order) throw new HttpException('Pedido não encontrado', 404);
+
+    const costumer = await this.costumerModel
+      .findOne(
+        { cpf: order.costumer_cpf },
+        { _id: false, name: true, email: true, cpf: true },
+      )
+      .exec();
+
+    const products = order.items.map((item) => {
+      return {
+        sku: item.product.sku,
+        title: item.product.title,
+        price: item.product.price,
+        quantity: item.quantity,
+        total: item.product.price * item.quantity,
+      };
+    });
+
+    const info = {
+      total: order.total,
+      date: order.createdAt.toISOString().substring(0, 10), // Format the date to "yyyy-MM-dd"
+    };
+
+    return new DetailsOrderDto({}, await products, await info);
+
   }
 }

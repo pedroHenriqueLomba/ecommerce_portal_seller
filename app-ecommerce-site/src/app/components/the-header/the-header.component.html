@@ -25,17 +25,18 @@
           </li>
         </ul>
         <span class="w-50 py-1">
-          <form class="input-group" role="search">
+          <form class="input-group" role="search" [formGroup]="searchForm">
             <input
               type="text"
               class="form-control border border-light"
               placeholder="Buscar produto"
               aria-label="Buscar produto"
+              formControlName="search"
             />
             <button
               class="btn btn-outline-light"
               type="button"
-              id="button-addon2"
+              (click)="searchProduct()"
             >
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>
@@ -49,17 +50,26 @@
               >Entrar / Cadastrar</a
             >
           </div>
-          <div class="" *ngIf="isAutenticatedUser()">
+          <div
+            class="d-flex align-items-center gap-4"
+            *ngIf="isAutenticatedUser()"
+          >
             <a
-              routerLink="user/edit"
+              routerLink="usuario/editar"
               class="link-underline link-underline-opacity-0 link-light"
-              ><i class="fa-solid fa-user"></i> Olá {{ costumerName }}</a
+              ><i class="fa-solid fa-user"></i> Editar Perfil</a
             >
-          </div>
-          <div *ngIf="isAutenticatedUser()">
+            <a
+              routerLink="pedidos"
+              class="link-underline link-underline-opacity-0 link-light"
+              ><i class="fa-solid fa-box"></i> Meus pedidos </a
+            >
             <a routerLink="carrinho" class="text-light">
               <i class="fa-solid fa-cart-shopping"></i>
             </a>
+            <button class="btn text-light p-0" (click)="exit()">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
           </div>
         </div>
       </div>

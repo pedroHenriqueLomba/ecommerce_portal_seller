@@ -1,0 +1,20 @@
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">N° Pedido</th>
+        <th scope="col">Data</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Visualizar detalhes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orderList">
+        <th scope="row">{{ order._id }}</th>
+        <td>{{ formatDate(order.createdAt) }}</td>
+        <td>{{ order.total }}</td>
+        <td><button class="btn btn-success" (click)="goToOrder(order._id)"><i class="fa-solid fa-eye"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

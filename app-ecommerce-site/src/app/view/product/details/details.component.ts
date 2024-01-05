@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
@@ -17,7 +18,8 @@ export class DetailsComponent {
   constructor(
     private service: ProductService,
     private route: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private toastr: ToastrService
   ) {}
 
   public product!: Product;
@@ -51,8 +53,10 @@ export class DetailsComponent {
       },
       error: (err) => {
         if (err.status === 401) {
+          this.toastr.error('Faça login para adicionar um produto ao carrinho');
           this.route.navigate(['login']);
         }
+        this.toastr.error('Não foi possível adicionar o produto ao carrinho');
         console.log(err);
       },
     });

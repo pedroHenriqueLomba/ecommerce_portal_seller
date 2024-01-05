@@ -52,4 +52,12 @@ export class CartService {
       { new: true },
     );
   }
+
+  async clearCart(cpf: string): Promise<Cart> {
+    return await this.model.findOneAndUpdate(
+      { costumerCpf: cpf },
+      { $set: { items: [] } },
+      { new: true },
+    );
+  }
 }

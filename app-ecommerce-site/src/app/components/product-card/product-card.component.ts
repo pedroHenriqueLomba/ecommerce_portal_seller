@@ -1,9 +1,9 @@
+import { ToastrService } from 'ngx-toastr';
 import { OrderItem } from './../../view/order/entities/orderItem.entity';
 import { Component, Input } from '@angular/core';
 import { ProductCard } from './productCard.entity';
 import { Router } from '@angular/router';
 import { CartService } from '../../view/cart/cart.service';
-import { CartItem } from '../../view/cart/entities/cartItem.entity';
 
 @Component({
   selector: 'app-product-card',
@@ -13,7 +13,7 @@ import { CartItem } from '../../view/cart/entities/cartItem.entity';
   styleUrl: './product-card.component.css',
 })
 export class ProductCardComponent {
-  constructor(private route: Router, private cartService: CartService) {}
+  constructor(private route: Router, private cartService: CartService, private toastr: ToastrService) {}
 
   @Input() product!: ProductCard;
 
@@ -34,13 +34,16 @@ export class ProductCardComponent {
       quantity: 1,
     };
     this.cartService.addProduct(cartItem).subscribe({
-      next: (test) => {
+      next: () => {
+        this.toastr.success('Produto adicionado ao carrinho');
         this.route.navigate(['carrinho']);
       },
       error: (err) => {
         if(err.status === 401){
+          this.toastr.error('Não foi possível adicionar o produto ao carrinho, faça login para continuar');
           this.route.navigate(['login']);
         }
+        this.toastr.error('Não foi possível adicionar o produto ao carrinho');
         console.log(err);
       }
     });

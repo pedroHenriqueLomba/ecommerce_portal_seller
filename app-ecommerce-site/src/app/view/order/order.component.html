@@ -1,1 +1,127 @@
-<p>order works!</p>
+<section class="container">
+  <h1>
+    Pedido <span class="fw-normal fs-5">{{ orderId }}</span>
+  </h1>
+  <hr />
+  <form [formGroup]="orderForm">
+    <h2>Produtos</h2>
+    <div formArrayName="products">
+      <div
+        *ngFor="
+          let product of getProductsFormArray()['controls'];
+          let i = index
+        "
+        [formGroupName]="i"
+      >
+        <div class="row py-1 my-2">
+          <div class="col-md-2">
+            <label for="sku{{ i }}" class="form-label">Sku</label>
+            <input
+              formControlName="sku"
+              [id]="'sku' + i"
+              type="text"
+              class="form-control"
+              readonly
+            />
+          </div>
+          <div class="col-md-4">
+            <label for="title{{ i }}" class="form-label">Titulo</label>
+            <input
+              formControlName="title"
+              [id]="'title' + i"
+              type="text"
+              class="form-control"
+              readonly
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="price{{ i }}" class="form-label">Preço</label>
+            <input
+              formControlName="price"
+              [id]="'price' + i"
+              type="text"
+              class="form-control"
+              prefix="R$ "
+              mask="separator.2"
+              thousandSeparator="."
+              readonly
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="quantity{{ i }}" class="form-label">Quantidade</label>
+            <input
+              formControlName="quantity"
+              [id]="'quantity' + i"
+              type="number"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="totalProduct{{ i }}" class="form-label">Total</label>
+            <input
+              formControlName="totalProduct"
+              [id]="'totalProduct' + i"
+              type="text"
+              class="form-control"
+              prefix="R$ "
+              mask="separator.2"
+              thousandSeparator="."
+              readonly
+            />
+          </div>
+        </div>
+        <hr *ngIf="getProductsFormArray()['controls'][i + 1]" />
+      </div>
+    </div>
+
+    <div class="dashed-line"></div>
+    <h2>Informações gerais</h2>
+    <div class="row py-1">
+      <div class="col-md-3 col-lg-2">
+        <label for="date" class="form-label">Data do pedido</label>
+        <input
+          formControlName="date"
+          id="date"
+          value="2023-11-14"
+          type="date"
+          class="form-control"
+        />
+      </div>
+      <div class="col-md-3 col-lg-2">
+        <label for="total" class="form-label">Total</label>
+        <input
+          formControlName="total"
+          id="total"
+          type="text"
+          class="form-control"
+          prefix="R$ "
+          mask="separator.2"
+          thousandSeparator="."
+        />
+      </div>
+      <div class="col-md-3 col-lg-3">
+        <label for="payment" class="form-label">Forma de pagamento</label>
+        <input
+          name="payment"
+          id="payment"
+          value="Cartão"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="col-md-3 col-lg-3">
+        <label for="status" class="form-label">Status</label>
+        <input
+          name="status"
+          id="status"
+          value="Aguardando pagamento"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="col-lg-2 d-flex justify-content-end align-items-end gap-2">
+        <button class="btn btn-danger" (click)="goToList()">Voltar</button>
+      </div>
+    </div>
+  </form>
+</section>

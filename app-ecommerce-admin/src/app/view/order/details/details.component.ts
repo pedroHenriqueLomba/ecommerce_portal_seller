@@ -31,8 +31,6 @@ export class DetailsComponent {
   ) {}
 
   public orderForm!: FormGroup;
-  private formData = new FormData();
-  private order = new Order();
 
   ngOnInit(): void {
     this.createForm();
