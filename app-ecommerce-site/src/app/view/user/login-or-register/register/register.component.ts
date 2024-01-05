@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import { equalsPasswordValidator } from './../../../../helpers/validators/equalsPasswordsValidator';
 import { Component } from '@angular/core';
@@ -11,6 +12,7 @@ import { cpfValidator } from '../../../../helpers/validators/cpfValidator';
 import { CommonModule } from '@angular/common';
 import { CostumerService } from '../../costumer.service';
 import { Costumer } from '../../costumer.entity';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +22,13 @@ import { Costumer } from '../../costumer.entity';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  constructor(private formBuilder: FormBuilder, private service: CostumerService, private toastr: ToastrService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private costumerService: CostumerService,
+    private toastr: ToastrService,
+    private cookieService: CookieService,
+    private route: Router
+  ) {}
 
   public registerForm!: FormGroup;
 
@@ -69,14 +77,26 @@ export class RegisterComponent {
     );
   }
   sendRequest(costumer: Costumer) {
-    this.service.registerCostumer(costumer).subscribe({
+    this.costumerService.registerCostumer(costumer).subscribe({
       next: (response) => {
         this.toastr.success('Cadastro realizado com sucesso');
+        this.costumerService.login({email: costumer.email, password: costumer.password}).subscribe({
+          next: (auth) => {
+            this.cookieService.set('access_token', auth.access_token, {expires: Date.now() + 10800000}); // 3 hours
+            this.cookieService.set('costumer_name', auth.name, {expires: Date.now() + 10800000}); // 3 hours
+
+            this.route.navigate(['/']);
+          },
+          error: (error) => {
+            this.toastr.error('Não foi possível realizar seu login');
+            console.log(error);
+          },
+        });
       },
       error: (error) => {
         this.toastr.error('Não foi possível realizar seu cadastro');
         console.log(error);
-      }
+      },
     });
   }
 }
